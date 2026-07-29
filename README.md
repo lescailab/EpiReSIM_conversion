@@ -144,26 +144,26 @@ column (`0` for control, `1` for case). MATLAB outputs contain a variable named
 
 ## Mathematical definition
 
-For minor-allele frequency \(m_j\), locus \(j\) has Hardy–Weinberg genotype
+For minor-allele frequency $m_j$, locus $j$ has Hardy–Weinberg genotype
 probabilities
 
-\[
+$$
 ((1-m_j)^2,\;2m_j(1-m_j),\;m_j^2).
-\]
+$$
 
-Under linkage equilibrium, genotype combination \(g\) has weight
+Under linkage equilibrium, genotype combination $g$ has weight
 
-\[
+$$
 w_g = \prod_j q_{j,g_j}.
-\]
+$$
 
-For penetrance \(f_g\), prevalence is \(K=\sum_g w_gf_g\). Every single-locus
-conditional penetrance is constrained to \(K\), and broad-sense heritability on
+For penetrance $f_g$, prevalence is $K=\sum_g w_gf_g$. Every single-locus
+conditional penetrance is constrained to $K$, and broad-sense heritability on
 the observed binary scale is
 
-\[
+$$
 H^2 = \frac{\sum_g w_g(f_g-K)^2}{K(1-K)}.
-\]
+$$
 
 The solver assumes Hardy–Weinberg and linkage equilibrium when constructing a
 penetrance table. The resampling stage can preserve empirical linkage, so strict
