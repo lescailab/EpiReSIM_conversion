@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "Please cite the original EpiReSIM paper when using this software."
+title: "EpiReSIM Python rewrite"
+type: software
+version: 0.1.0
+license: MIT
+authors:
+  - name: "EpiReSIM contributors"
+repository-code: "https://github.com/lescailab/EpiReSIM_conversion"
+preferred-citation:
+  type: article
+  title: "EpiReSIM: A Resampling Method of Epistatic Model without Marginal Effects Using Under-Determined System of Equations"
+  authors:
+    - family-names: Shang
+      given-names: Junliang
+    - family-names: Cai
+      given-names: Xinrui
+    - family-names: Zhang
+      given-names: Tongdui
+    - family-names: Sun
+      given-names: Yan
+    - family-names: Zhang
+      given-names: Yuanyuan
+    - family-names: Liu
+      given-names: Jinxing
+    - family-names: Guan
+      given-names: Boxin
+  journal: Genes
+  volume: 13
+  issue: 12
+  year: 2022
+  doi: "10.3390/genes13122286"

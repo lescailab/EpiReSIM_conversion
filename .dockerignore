@@ -1,0 +1,13 @@
+.git
+.github
+.hypothesis
+.mypy_cache
+.pytest_cache
+.ruff_cache
+Data
+build
+dist
+results
+tests
+*.pyc
+__pycache__

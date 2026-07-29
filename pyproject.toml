@@ -1,0 +1,113 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "epiresim"
+version = "0.1.0"
+description = "A validated Python rewrite of the EpiReSIM epistasis simulator"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [
+  { name = "EpiReSIM contributors" },
+]
+keywords = [
+  "bioinformatics",
+  "epistasis",
+  "genetics",
+  "simulation",
+  "GWAS",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+  "numpy>=1.26,<3",
+  "scipy>=1.12,<2",
+]
+
+[project.optional-dependencies]
+test = [
+  "hypothesis>=6.100",
+  "pytest>=8",
+  "pytest-cov>=5",
+]
+dev = [
+  "build>=1.2",
+  "epiresim[test]",
+  "mypy>=1.10",
+  "ruff>=0.6",
+]
+
+[project.scripts]
+epiresim = "epiresim.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/lescailab/EpiReSIM_conversion"
+Repository = "https://github.com/lescailab/EpiReSIM_conversion"
+Issues = "https://github.com/lescailab/EpiReSIM_conversion/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/epiresim"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/src",
+  "/tests",
+  "/8 eNME Models",
+  "/code",
+  "/CHANGELOG.md",
+  "/CITATION.cff",
+  "/CONTRIBUTING.md",
+  "/LICENSE",
+  "/README.md",
+  "/VALIDATION.md",
+  "/pyproject.toml",
+]
+exclude = [
+  "/Data",
+]
+
+[tool.pytest.ini_options]
+addopts = "--strict-config --strict-markers"
+testpaths = ["tests"]
+markers = [
+  "compatibility: comparison with the MATLAB reference implementation",
+  "integration: end-to-end package tests",
+  "slow: tests that may take more than one second",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["epiresim"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["epiresim"]
+
+[[tool.mypy.overrides]]
+module = ["scipy.*"]
+ignore_missing_imports = true

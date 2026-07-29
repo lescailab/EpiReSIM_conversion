@@ -1,0 +1,49 @@
+{% set name = "epiresim" %}
+{% set version = "0.1.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  path: ../..
+
+build:
+  noarch: python
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  entry_points:
+    - epiresim = epiresim.cli:main
+
+requirements:
+  host:
+    - python >=3.11
+    - pip
+    - hatchling >=1.27
+  run:
+    - python >=3.11
+    - numpy >=1.26,<3
+    - scipy >=1.12,<2
+
+test:
+  imports:
+    - epiresim
+  commands:
+    - epiresim --help
+    - python -c "from epiresim import genotype_probabilities; assert abs(genotype_probabilities([0.2, 0.3]).sum() - 1.0) < 1e-12"
+
+about:
+  home: https://github.com/lescailab/EpiReSIM_conversion
+  license: MIT
+  license_file: LICENSE
+  summary: Validated Python rewrite of the EpiReSIM epistasis simulator
+  description: |
+    EpiReSIM simulates case-control SNP matrices containing epistatic models
+    without marginal effects, using penetrance constraints and fragment
+    resampling from reference genotypes.
+  doc_url: https://github.com/lescailab/EpiReSIM_conversion
+  dev_url: https://github.com/lescailab/EpiReSIM_conversion
+
+extra:
+  recipe-maintainers:
+    - lescai
