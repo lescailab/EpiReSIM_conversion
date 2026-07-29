@@ -43,7 +43,7 @@ jobs:
       - shell: bash -el {0}
         run: conda install --yes conda-build conda-verify
       - shell: bash -el {0}
-        run: conda-build conda/recipe
+        run: conda-build --channel conda-forge conda/recipe
 
   container:
     runs-on: ubuntu-latest
