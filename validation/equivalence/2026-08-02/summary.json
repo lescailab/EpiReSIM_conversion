@@ -64,7 +64,8 @@
   },
   "artifacts": {
     "wheel_sha256": "779991e92a41afbdc9a9a1ce338815165b4d05457c967c321115af7c3683ade8",
-    "conda_sha256": "7d1cf283750a5e1f0148230aac50e424ed773123dfa12489c7a831d5ec715d83",
+    "conda_distribution": "lescailab/noarch::epiresim-0.1.0-py_2",
+    "conda_sha256": "ee0ffce964828facba5f0e09e591068e3471895969758905c3dfbe6ef917eb87",
     "oci_image_id": "sha256:815ff000327a5af9f8027b6ec594d8525e50fa5649df7638d7089b141a750504"
   },
   "human_approval": {

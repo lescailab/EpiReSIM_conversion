@@ -110,7 +110,7 @@ and ARM64.
 
 ## Artifact validation status
 
-The `lescailab/epiresim 0.1.0 py_1` noarch Conda package was built from a
+The `lescailab/epiresim 0.1.0 py_2` noarch Conda package was built from a
 checksummed archive of the recorded source commit, passed the recipe tests, and
 was installed successfully from the public channel into a clean Python 3.11
 environment. See `validation/packaging/2026-08-02/CONDA.md`. Clean wheel and OCI
