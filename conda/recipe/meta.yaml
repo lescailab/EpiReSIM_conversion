@@ -6,12 +6,12 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/lescailab/EpiReSIM_conversion/archive/a1d54b772098edfe4e9fe9f8b67911a1fd4bd17b.tar.gz
-  sha256: 133f0762c29f1dde933aef74029c7081227db82b437c6f233329e0e3bc2cfab7
+  url: https://github.com/lescailab/EpiReSIM_conversion/archive/ee533919f564148f1f9d6e48e18388b1714f9f7e.tar.gz
+  sha256: 3914d1323722fd2e0d427badccc36aaa7ff6cef71cb204adc52c7731fefaa332
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   entry_points:
     - epiresim = epiresim.cli:main

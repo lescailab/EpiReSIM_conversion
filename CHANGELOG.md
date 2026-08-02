@@ -18,7 +18,7 @@ Versioning after the first stable release.
   provenance, and Rewrite.bio commitments, with automatic GitHub Pages
   deployment.
 - Checksummed `noarch: python` package published as
-  `lescailab/epiresim 0.1.0 py_0`, with a clean remote installation test.
+  `lescailab/epiresim 0.1.0 py_1`, with a clean remote installation test.
 
 ### Validation
 

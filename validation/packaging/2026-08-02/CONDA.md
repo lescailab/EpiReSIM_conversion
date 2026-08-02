@@ -2,17 +2,17 @@
 
 ## Outcome
 
-`epiresim 0.1.0 py_0` was built as `noarch: python`, passed the recipe tests,
+`epiresim 0.1.0 py_1` was built as `noarch: python`, passed the recipe tests,
 uploaded to the public `lescailab` Anaconda channel, and installed successfully
 from that channel into a clean Python 3.11 environment.
 
 - Package page: <https://anaconda.org/lescailab/epiresim>
-- Distribution: `noarch/epiresim-0.1.0-py_0.tar.bz2`
+- Distribution: `noarch/epiresim-0.1.0-py_1.tar.bz2`
 - Artifact SHA-256:
-  `979aaff236e88acfd7b3ccfc60d775ca933d3618839a7c4b78fb578880af5927`
-- Source commit: `a1d54b772098edfe4e9fe9f8b67911a1fd4bd17b`
+  `7d1cf283750a5e1f0148230aac50e424ed773123dfa12489c7a831d5ec715d83`
+- Source commit: `ee533919f564148f1f9d6e48e18388b1714f9f7e`
 - Source-archive SHA-256:
-  `133f0762c29f1dde933aef74029c7081227db82b437c6f233329e0e3bc2cfab7`
+  `3914d1323722fd2e0d427badccc36aaa7ff6cef71cb204adc52c7731fefaa332`
 
 ## Build environment
 
@@ -46,7 +46,7 @@ recipe was built:
 
 ```bash
 curl --fail --silent --show-error --location \
-  https://github.com/lescailab/EpiReSIM_conversion/archive/a1d54b772098edfe4e9fe9f8b67911a1fd4bd17b.tar.gz \
+  https://github.com/lescailab/EpiReSIM_conversion/archive/ee533919f564148f1f9d6e48e18388b1714f9f7e.tar.gz \
   --output /path/to/source.tar.gz
 shasum -a 256 /path/to/source.tar.gz
 ```
@@ -72,7 +72,7 @@ The tested artifact was uploaded without a force or overwrite option:
 
 ```bash
 anaconda upload --label main \
-  /path/to/build-root/noarch/epiresim-0.1.0-py_0.tar.bz2
+  /path/to/build-root/noarch/epiresim-0.1.0-py_1.tar.bz2
 ```
 
 A new environment then resolved the package from the public channel rather than
@@ -86,16 +86,22 @@ conda create --yes \
   --channel conda-forge \
   --strict-channel-priority \
   python=3.11 \
-  epiresim=0.1.0
+  epiresim=0.1.0=py_1
 ```
 
 `conda list --show-channel-urls` identified the installed distribution as
-`lescailab/noarch::epiresim-0.1.0-py_0`. Verification then confirmed:
+`lescailab/noarch::epiresim-0.1.0-py_1`. Verification then confirmed:
 
 - the `epiresim` command and help output;
 - installed metadata version `0.1.0`;
 - normalized genotype probabilities; and
 - a solved order-two compatibility penetrance vector with nine entries.
+
+An initial `py_0` build was uploaded before the installed Python metadata
+summary was narrowed to state the validation scope explicitly. Build `py_1`
+supersedes it and is selected by normal Conda resolution because it has the
+higher build number. The independent installation above constrained `py_1`
+explicitly.
 
 ## Rewrite.bio release checks
 
