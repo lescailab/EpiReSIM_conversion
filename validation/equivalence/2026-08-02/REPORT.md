@@ -136,7 +136,8 @@ non-termination cases were not executed against the unbounded original.
    and authorized representative real data.
 3. Repeat the compatibility matrix for other supported MATLAB releases and
    architectures, or document R2026a as the validated compatibility boundary.
-4. Complete clean wheel, Conda, and OCI artifact validation.
+4. Complete clean wheel and OCI artifact validation. Conda 0.1.0 packaging and
+   remote installation are recorded separately under `validation/packaging/`.
 5. Obtain human approval of the completed release report.
 
 Raw matrices remain outside version control until they are reviewed and approved

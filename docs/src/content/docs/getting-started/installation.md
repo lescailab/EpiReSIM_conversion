@@ -6,6 +6,24 @@ description: Install the Python rewrite in an isolated environment and verify th
 EpiReSIM requires Python 3.11 or newer. Use an isolated environment so its
 NumPy and SciPy requirements do not alter unrelated analyses.
 
+## Install with Conda
+
+The tested `noarch: python` package is published on the `lescailab` channel.
+Use conda-forge for NumPy, SciPy, and their compiled dependencies:
+
+```bash
+conda create --name epiresim \
+  --channel lescailab \
+  --channel conda-forge \
+  --strict-channel-priority \
+  epiresim=0.1.0
+conda activate epiresim
+```
+
+Pinning `0.1.0` makes this installation record explicit. The package was built
+as `noarch`, so the EpiReSIM code is shared across platforms; Conda still
+selects platform-specific NumPy and SciPy builds.
+
 ## Install from the repository
 
 ```bash
@@ -42,11 +60,8 @@ python -m pip install -e ".[dev]"
 pytest
 ```
 
-:::note[Conda]
-A noarch Conda package is being prepared for the `lescailab` channel. This page
-will show a tested installation command once the uploaded package has been
-verified from a clean environment.
-:::
+Package metadata and the clean remote-install test are recorded in the
+[Conda packaging report](https://github.com/lescailab/EpiReSIM_conversion/blob/main/validation/packaging/2026-08-02/CONDA.md).
 
 ## Platform support
 

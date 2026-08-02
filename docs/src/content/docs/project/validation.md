@@ -40,7 +40,8 @@ Release-wide equivalence is not yet claimed. Outstanding gates include:
 - authorized representative real-data comparison;
 - validation of supported MATLAB releases and architectures, or an explicit
   R2026a compatibility boundary;
-- clean wheel, Conda, and OCI artifact validation; and
+- clean wheel and OCI artifact validation (the public noarch Conda 0.1.0
+  package has passed a clean remote-install check); and
 - explicit human approval of the completed release report.
 
 Read the repository's

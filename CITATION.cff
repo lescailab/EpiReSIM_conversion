@@ -3,6 +3,7 @@ message: "Please cite the original EpiReSIM paper when using this software."
 title: "EpiReSIM Python rewrite"
 type: software
 version: 0.1.0
+date-released: 2026-08-02
 license: MIT
 authors:
   - name: "EpiReSIM contributors"

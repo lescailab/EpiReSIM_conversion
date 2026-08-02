@@ -3,7 +3,7 @@
 All notable changes are documented here. The project follows Semantic
 Versioning after the first stable release.
 
-## 0.1.0 — Unreleased
+## 0.1.0 — 2026-08-02
 
 ### Added
 
@@ -17,6 +17,8 @@ Versioning after the first stable release.
   reference data, model recipes, interfaces, outputs, limitations, validation,
   provenance, and Rewrite.bio commitments, with automatic GitHub Pages
   deployment.
+- Checksummed `noarch: python` package published as
+  `lescailab/epiresim 0.1.0 py_0`, with a clean remote installation test.
 
 ### Validation
 

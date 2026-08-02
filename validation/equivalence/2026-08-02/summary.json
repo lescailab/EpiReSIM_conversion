@@ -52,7 +52,7 @@
   "remaining_gates": [
     "reviewed_committed_golden_manifest",
     "broader_and_representative_fixtures",
-    "wheel_conda_oci_validation",
+    "wheel_and_oci_validation",
     "human_release_approval"
   ]
 }

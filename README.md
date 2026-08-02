@@ -20,6 +20,19 @@ bounded strict mode.
 
 Python 3.11 or newer is required.
 
+Install the published noarch Conda package:
+
+```bash
+conda create --name epiresim \
+  --channel lescailab \
+  --channel conda-forge \
+  --strict-channel-priority \
+  epiresim=0.1.0
+conda activate epiresim
+```
+
+Or install from a source checkout:
+
 ```bash
 python -m pip install .
 ```
@@ -40,9 +53,11 @@ conda activate epiresim-dev
 python -m pip install -e .
 ```
 
-A `noarch: python` Conda recipe, environment definitions, and an OCI container
-definition are included in the repository. The bundled reference dataset is
-intentionally excluded from package and container artifacts.
+The `noarch: python` package is published on the
+[`lescailab` Anaconda channel](https://anaconda.org/lescailab/epiresim).
+Environment definitions and an OCI container definition are also included in
+the repository. The bundled reference dataset is intentionally excluded from
+package and container artifacts.
 
 ## Documentation
 

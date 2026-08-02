@@ -85,6 +85,14 @@ commands, data dimensions, CPU architecture, operating system, dependency
 versions, elapsed time, and peak resident memory. Benchmarks must cover x86-64
 and ARM64.
 
+## Artifact validation status
+
+The `lescailab/epiresim 0.1.0 py_0` noarch Conda package was built from a
+checksummed archive of the recorded source commit, passed the recipe tests, and
+was installed successfully from the public channel into a clean Python 3.11
+environment. See `validation/packaging/2026-08-02/CONDA.md`. Clean wheel and OCI
+artifact validation remain outstanding.
+
 ## Release gate
 
 A stable equivalence claim requires:

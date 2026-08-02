@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "epiresim"
 version = "0.1.0"
-description = "A validated Python rewrite of the EpiReSIM epistasis simulator"
+description = "Python rewrite of EpiReSIM with recorded MATLAB compatibility testing"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { file = "LICENSE" }

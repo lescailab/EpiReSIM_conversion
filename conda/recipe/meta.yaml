@@ -6,7 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  path: ../..
+  url: https://github.com/lescailab/EpiReSIM_conversion/archive/a1d54b772098edfe4e9fe9f8b67911a1fd4bd17b.tar.gz
+  sha256: 133f0762c29f1dde933aef74029c7081227db82b437c6f233329e0e3bc2cfab7
 
 build:
   noarch: python
@@ -36,11 +37,14 @@ about:
   home: https://github.com/lescailab/EpiReSIM_conversion
   license: MIT
   license_file: LICENSE
-  summary: Validated Python rewrite of the EpiReSIM epistasis simulator
+  summary: Python rewrite of EpiReSIM with recorded MATLAB compatibility testing
   description: |
-    EpiReSIM simulates case-control SNP matrices containing epistatic models
-    without marginal effects, using penetrance constraints and fragment
-    resampling from reference genotypes.
+    This package rewrites the EpiReSIM method and software published by Shang
+    et al. (Genes 2022, doi:10.3390/genes13122286). It simulates case-control
+    SNP matrices containing epistatic models without marginal effects, using
+    penetrance constraints and fragment resampling from reference genotypes.
+    Compatibility claims are limited to the environments and scenarios in the
+    linked validation report.
   doc_url: https://lescailab.github.io/EpiReSIM_conversion/
   dev_url: https://github.com/lescailab/EpiReSIM_conversion
 
