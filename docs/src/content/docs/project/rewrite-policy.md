@@ -23,7 +23,8 @@ scientific behavior belong in strict mode and are not labeled equivalent.
 
 The project discloses generative implementation assistance, exact validation
 environment, synthetic scope, deviations in raw MAT encoding, unsupported
-features, and unfinished release gates.
+features, the current release decision, and the validation required to expand
+the declared compatibility boundary.
 
 ## Work in validated increments
 

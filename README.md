@@ -275,7 +275,9 @@ code generation or review alone.
 Compliance with [Rewrite.bio](https://rewrites.bio/) is a binding project rule;
 see [REWRITE_POLICY.md](REWRITE_POLICY.md). The Rewrite.bio badge states that
 the project follows its best-practice principles; it is not an equivalence
-certification. A release-wide equivalence claim remains subject to the gates in
+certification. The release gate has passed for the declared MATLAB R2026a
+Update 4 on Apple Silicon compatibility scope; claims covering other MATLAB
+releases, architectures, or untested inputs require their own validation under
 [VALIDATION.md](VALIDATION.md).
 
 ## License

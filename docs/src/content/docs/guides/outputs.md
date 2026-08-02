@@ -19,8 +19,11 @@ If 100 SNPs were requested, the matrix has 101 columns.
 ## MATLAB output
 
 The `.mat` file is MATLAB Level 5 and contains one variable named `SNP`.
-Compatibility mode exposes it as MATLAB class `double` and uses compression,
-matching the registered semantic schema of the original output.
+Compatibility mode uses compression and preserves the MATLAB numeric class of
+the reference genotype matrix, matching the original writer. A `double`
+reference therefore produces `double` output, while an integer-class reference
+produces the corresponding integer-class output. Strict mode always writes an
+uncompressed `int8` matrix.
 
 ```python
 from scipy.io import loadmat

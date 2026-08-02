@@ -28,10 +28,12 @@ The original MATLAB files under `code/` were unchanged during validation.
 | Maximum nonlinear penetrance difference | $8.21\times10^{-11}$ |
 | Registered penetrance tolerance | $5\times10^{-7}$ |
 
-Both MAT writers expose a compressed Level-5 `SNP` variable with MATLAB class
-`double`. Raw file bytes differ because MATLAB and SciPy use different headers
-and internal numeric storage; validation compares the registered loaded schema
-and exact values.
+For the main registered matrix, both MAT writers expose a compressed Level-5
+`SNP` variable with MATLAB class `double`. The compact golden fixture and the
+representative comparison additionally verify integer-class propagation. Raw
+file bytes can differ because MATLAB and SciPy use different headers and
+internal numeric storage; validation compares the registered loaded schema,
+class, and exact values.
 
 ## Release decision
 

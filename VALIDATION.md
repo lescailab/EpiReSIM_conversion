@@ -41,7 +41,8 @@ The Python suite covers:
 - end-to-end API and CLI reproducibility;
 - MATLAB R2026a twister and single-choice `randperm` compatibility probes;
 - MATLAB-compatible nonlinear Gauss–Seidel convergence behavior;
-- MATLAB-class `double`, compressed Level-5 compatibility output;
+- compressed Level-5 compatibility output with the MATLAB class propagated
+  from the reference input, including `double` and integer-class coverage;
 - recomputation of the eight published model tables; and
 - wheel, Conda, and container smoke installation in CI.
 

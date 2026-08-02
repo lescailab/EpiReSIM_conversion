@@ -17,7 +17,7 @@ requested explicitly.
 | Penetrance bounds | Negative values clipped; upper values not clipped | Every value required in `[0, 1]` |
 | Causal loci | Repeated locus can occur | Loci must be distinct |
 | Existing outputs | MAT/log overwrite; text appends | Any collision is rejected |
-| MAT storage | Compressed MATLAB-class `double` | Uncompressed integer matrix |
+| MAT storage | Compressed Level 5, preserving the reference input's MATLAB class | Uncompressed `int8` matrix |
 | Recommended new reference | Native bundle accepted as a compatibility bridge | Native provenance-aware bundle |
 | Safety limits | Added to stop legacy non-termination | Added and enforced |
 
