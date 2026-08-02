@@ -11,3 +11,6 @@ build/
 dist/
 htmlcov/
 results/
+docs/.astro/
+docs/dist/
+docs/node_modules/

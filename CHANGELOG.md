@@ -13,6 +13,10 @@ Versioning after the first stable release.
 - Seeded fragment resampling, phenotype assignment, and case/control quotas.
 - Scientific, property, integration, published-model, and parity-gate tests.
 - Wheel, Conda, and OCI packaging definitions.
+- Beginner-oriented Astro documentation covering genetics, mathematics,
+  reference data, model recipes, interfaces, outputs, limitations, validation,
+  provenance, and Rewrite.bio commitments, with automatic GitHub Pages
+  deployment.
 
 ### Validation
 

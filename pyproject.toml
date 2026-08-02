@@ -55,6 +55,7 @@ epiresim = "epiresim.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/lescailab/EpiReSIM_conversion"
+Documentation = "https://lescailab.github.io/EpiReSIM_conversion/"
 Repository = "https://github.com/lescailab/EpiReSIM_conversion"
 Issues = "https://github.com/lescailab/EpiReSIM_conversion/issues"
 

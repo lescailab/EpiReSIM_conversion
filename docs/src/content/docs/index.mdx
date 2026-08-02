@@ -1,0 +1,66 @@
+---
+title: EpiReSIM documentation
+description: Learn to simulate case-control SNP data with epistatic models without marginal effects.
+template: splash
+hero:
+  tagline: Build reproducible case-control SNP simulations with an epistatic signal, while preserving the local structure of a reference genotype dataset.
+  actions:
+    - text: Run your first simulation
+      link: /EpiReSIM_conversion/getting-started/quickstart/
+      icon: right-arrow
+      variant: primary
+    - text: Learn the genetics
+      link: /EpiReSIM_conversion/background/genetics/
+      icon: open-book
+    - text: View validation
+      link: /EpiReSIM_conversion/project/validation/
+      icon: approve-check
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## What EpiReSIM does
+
+EpiReSIM creates simulated **case-control genotype datasets** for evaluating
+methods that search for interactions among SNPs. It first constructs a
+penetrance table for an epistatic model without marginal effects, then generates
+new samples by recombining short fragments from control individuals in a
+reference dataset.
+
+<CardGrid>
+  <Card title="New to genetics?" icon="open-book">
+    Start with alleles, genotypes, SNPs, MAF, penetrance, prevalence,
+    heritability, epistasis, HWE, and linkage equilibrium in plain language.
+  </Card>
+  <Card title="Ready to simulate?" icon="rocket">
+    Follow complete command-line recipes for prevalence-only or
+    prevalence-plus-heritability models of orders two through five.
+  </Card>
+  <Card title="Need reproducibility?" icon="approve-check">
+    See exactly what was compared with the original MATLAB implementation,
+    which scenarios match, and which release gates remain open.
+  </Card>
+  <Card title="Using an existing workflow?" icon="setting">
+    Choose compatibility mode for the validated MATLAB behavior or strict mode
+    for bounded penetrances and safer failure handling.
+  </Card>
+</CardGrid>
+
+:::caution[Validated scope, not a universal claim]
+The registered synthetic MATLAB R2026a comparison passes, including exact
+same-seed output matrices. This does not prove equivalence for every dataset,
+MATLAB release, architecture, or boundary input. Read the
+[validation status](/EpiReSIM_conversion/project/validation/) before substituting this rewrite in a
+scientific workflow.
+:::
+
+## Where this documentation came from
+
+The original repository's usage manual consisted of one sentence instructing
+users to run `EpiReSIM.m`. This manual preserves the original program's scope
+and behavior while making the published method, the translated Python
+interface, the input contract, and the validation limitations explicit.
+
+The rewrite visibly credits the original authors and paper throughout, follows
+the repository's [Rewrite.bio commitments](/EpiReSIM_conversion/project/rewrite-policy/), and keeps
+compatibility claims tied to recorded evidence.

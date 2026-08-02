@@ -44,6 +44,16 @@ A `noarch: python` Conda recipe, environment definitions, and an OCI container
 definition are included in the repository. The bundled reference dataset is
 intentionally excluded from package and container artifacts.
 
+## Documentation
+
+The beginner-friendly manual is published at
+[lescailab.github.io/EpiReSIM_conversion](https://lescailab.github.io/EpiReSIM_conversion/).
+It covers the genetics and mathematics behind the model, reference-data
+preparation, complete prevalence-only and heritability-constrained recipes,
+interfaces, outputs, assumptions, validation, provenance, and Rewrite.bio
+commitments. The Astro source lives in `docs/` and is deployed automatically by
+GitHub Actions.
+
 ## Command line
 
 The command maps the original 12 MATLAB arguments to named options:
