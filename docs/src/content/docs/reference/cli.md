@@ -1,6 +1,6 @@
 ---
 title: Command-line reference
-description: Complete reference for the epiresim simulate command.
+description: Reference for simulation and native reference-data commands.
 ---
 
 ## Synopsis
@@ -13,7 +13,7 @@ epiresim simulate REFERENCE [options]
 
 | Argument | Required | Meaning |
 |---|:---:|---|
-| `REFERENCE` | yes | Path to the MATLAB v5 reference file. |
+| `REFERENCE` | yes | Path to a native `.epiref` bundle or MATLAB v5 reference file. |
 | `--cases INTEGER` | yes | Number of phenotype-1 rows per replicate; may be zero if controls are positive. |
 | `--controls INTEGER` | yes | Number of phenotype-0 rows per replicate; may be zero if cases are positive. |
 | `--snps INTEGER` | yes | Number of consecutive genotype columns in each output. |
@@ -30,6 +30,34 @@ epiresim simulate REFERENCE [options]
 
 Run `epiresim simulate --help` for the installed version's authoritative
 parser output.
+
+## Reference commands
+
+```text
+epiresim reference build VCF --output PATH --genome-build BUILD [options]
+epiresim reference import-mat MAT --output PATH [options]
+epiresim reference export-mat REFERENCE --output MAT
+epiresim reference inspect REFERENCE
+epiresim reference validate REFERENCE
+```
+
+`reference build` accepts VCF and VCF.GZ hard calls, selects one chromosome,
+optionally subsets samples or a named population, recodes against the observed
+minor allele, and writes a checksummed native bundle. Important options are:
+
+| Option | Meaning |
+|---|---|
+| `--chromosome TEXT` | Retain one chromosome. Required in practice for a multi-chromosome VCF. |
+| `--sample-file PATH` | Retain IDs listed one per line. |
+| `--sample-metadata PATH` | Tab-separated sample-to-population metadata. |
+| `--population TEXT` | Retain one population from the metadata. |
+| `--min-maf FLOAT` | Minimum MAF in selected donors; default `0`. |
+| `--include-filtered` | Include records whose FILTER is neither `PASS` nor `.`. |
+| `--source-name`, `--source-release`, `--source-url` | Stable provenance recorded in the manifest. |
+
+Read [Prepare reference data](../../getting-started/reference-data/) before
+constructing a study reference; filtering and population selection are
+methodological decisions.
 
 ## Exit behavior
 

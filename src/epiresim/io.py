@@ -12,6 +12,7 @@ from scipy import io as scipy_io
 
 from ._random import RandomSource, matlab_randperm_one, random_integer
 from .exceptions import InputValidationError, OutputCollisionError
+from .reference import load_native_reference_arrays
 from .types import PenetranceModel, ReferenceData, SimulationConfig
 
 
@@ -53,11 +54,27 @@ def load_reference(
     config: SimulationConfig,
     rng: RandomSource,
 ) -> ReferenceData:
-    """Load and validate the MATLAB reference dataset used for resampling."""
+    """Load and validate a MATLAB file or native reference bundle."""
 
     reference_path = Path(path)
+    if reference_path.is_dir():
+        dosages, sample_metadata, variant_rows, _manifest = load_native_reference_arrays(
+            reference_path
+        )
+        genotypes = np.asarray(dosages + 1, dtype=np.int8)
+        labels = np.full(genotypes.shape[0], 2, dtype=np.int64)
+        return _select_reference_window(
+            genotypes,
+            labels,
+            np.asarray(variant_rows, dtype=object),
+            reference_path.stem,
+            config,
+            rng,
+            sample_metadata=sample_metadata,
+            compatibility_mat_dtype=np.dtype(np.int8),
+        )
     if not reference_path.is_file():
-        raise InputValidationError(f"Reference MATLAB file does not exist: {reference_path}")
+        raise InputValidationError(f"Reference input does not exist: {reference_path}")
     try:
         content = scipy_io.loadmat(reference_path)
     except (OSError, ValueError, NotImplementedError) as error:
@@ -78,12 +95,38 @@ def load_reference(
         raise InputValidationError("'pts' contains non-finite genotype values.")
     if np.any((genotypes < 1) | (genotypes > 3) | (genotypes != np.floor(genotypes))):
         raise InputValidationError("'pts' genotype codes must be integers 1, 2, or 3.")
+    labels = _extract_labels(np.asarray(content["SampleInfo"], dtype=object), genotypes.shape[0])
+    metadata: NDArray[np.object_] | None = None
+    if "SNPInfo" in content:
+        raw_metadata = np.asarray(content["SNPInfo"], dtype=object)
+        if raw_metadata.ndim == 2 and raw_metadata.shape[0] == genotypes.shape[1]:
+            metadata = raw_metadata
+    return _select_reference_window(
+        np.asarray(genotypes, dtype=np.int8),
+        labels,
+        metadata,
+        reference_path.stem,
+        config,
+        rng,
+        compatibility_mat_dtype=np.dtype(genotypes.dtype),
+    )
+
+
+def _select_reference_window(
+    genotypes: NDArray[np.int8],
+    labels: NDArray[np.int64],
+    metadata: NDArray[np.object_] | None,
+    name: str,
+    config: SimulationConfig,
+    rng: RandomSource,
+    *,
+    sample_metadata: NDArray[np.object_] | None = None,
+    compatibility_mat_dtype: np.dtype[Any] | None = None,
+) -> ReferenceData:
     if config.snp_count > genotypes.shape[1]:
         raise InputValidationError(
             f"Requested {config.snp_count} SNPs from only {genotypes.shape[1]} columns."
         )
-
-    labels = _extract_labels(np.asarray(content["SampleInfo"], dtype=object), genotypes.shape[0])
     available_starts = genotypes.shape[1] - config.snp_count
     if config.mode == "compatibility":
         matlab_span = genotypes.shape[1] - config.snp_count - 1
@@ -107,19 +150,21 @@ def load_reference(
     if controls.shape[0] == 0:
         raise InputValidationError("Reference data contains no samples with control label 2.")
 
-    metadata: NDArray[np.object_] | None = None
-    if "SNPInfo" in content:
-        raw_metadata = np.asarray(content["SNPInfo"], dtype=object)
-        if raw_metadata.ndim == 2 and raw_metadata.shape[0] == genotypes.shape[1]:
-            metadata = raw_metadata[window_start : window_start + config.snp_count].copy()
+    selected_metadata = (
+        metadata[window_start : window_start + config.snp_count].copy()
+        if metadata is not None
+        else None
+    )
 
     return ReferenceData(
         genotypes=selected,
         labels=labels,
         control_genotypes=controls,
-        variant_metadata=metadata,
-        name=reference_path.stem,
+        variant_metadata=selected_metadata,
+        sample_metadata=sample_metadata,
+        name=name,
         window_start=window_start,
+        compatibility_mat_dtype=compatibility_mat_dtype or np.dtype(np.float64),
     )
 
 
@@ -202,11 +247,16 @@ def write_matrix(
     path: Path,
     output_format: str,
     mode: str,
+    compatibility_dtype: np.dtype[Any] | None = None,
 ) -> None:
     """Write one simulated matrix in a legacy-compatible format."""
 
     if output_format == "mat":
-        matrix_dtype = np.float64 if mode == "compatibility" else np.int8
+        matrix_dtype = (
+            compatibility_dtype or np.dtype(np.float64)
+            if mode == "compatibility"
+            else np.dtype(np.int8)
+        )
         scipy_io.savemat(
             path,
             {"SNP": np.asarray(matrix, dtype=matrix_dtype)},

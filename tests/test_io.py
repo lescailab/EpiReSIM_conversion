@@ -137,6 +137,16 @@ def test_compatibility_mat_writer_matches_matlab_dtype_and_compression(
     np.testing.assert_array_equal(loadmat(path, mat_dtype=True)["SNP"], matrix)
 
 
+def test_compatibility_mat_writer_preserves_integer_reference_class(tmp_path: Path) -> None:
+    matrix = np.array([[1, 2, 3, 0], [3, 2, 1, 1]], dtype=np.int8)
+    path = tmp_path / "compatibility_int8.mat"
+
+    write_matrix(matrix, path, "mat", "compatibility", np.dtype(np.int8))
+
+    assert whosmat(path) == [("SNP", (2, 4), "int8")]
+    np.testing.assert_array_equal(loadmat(path, mat_dtype=True)["SNP"], matrix)
+
+
 def test_model_log_uses_matlab_indexing_and_six_decimals() -> None:
     model = solve_penetrance([0.2, 0.3], 0.2, mode="strict")
     from dataclasses import replace

@@ -14,7 +14,7 @@ from pathlib import Path
 from epiresim import SimulationConfig, run
 
 config = SimulationConfig(
-    reference_path=Path("/path/to/reference.mat"),
+    reference_path=Path("/path/to/reference.epiref"),
     case_count=100,
     control_count=100,
     snp_count=50,
@@ -72,6 +72,11 @@ from the reference and solves with their observed MAFs.
 The package also exposes:
 
 - `load_reference()` for schema validation and window selection;
+- `build_reference_from_vcf()` for VCF/VCF.GZ construction;
+- `import_mat_reference()` and `export_mat_reference()` for compatibility
+  conversion;
+- `inspect_reference_bundle()` and `validate_reference_bundle()` for native
+  bundle checks;
 - `genotype_probabilities()` for the HWE/linkage-equilibrium weight vector;
 - `simulate()` for one dataset from a prepared reference and model; and
 - the public configuration and result dataclasses.

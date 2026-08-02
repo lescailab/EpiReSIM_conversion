@@ -12,9 +12,12 @@ The MATLAB source in `code/` remains unchanged and is the validation oracle.
 A licensed MATLAB comparison and remediation run was completed on 2026-08-02.
 The initial run exposed nonlinear-solver, RNG, success/failure, dtype, and
 serialization differences. After targeted compatibility corrections, the
-registered synthetic matrix passed. Release-wide cross-language equivalence is
-still not claimed because the committed golden corpus and remaining release
-gates below are incomplete. See
+registered synthetic matrix and an ephemeral representative historical-reference
+comparison passed. The committed golden corpus, stochastic study, clean
+wheel/Conda/OCI checks, documentation and governance review, and explicit human
+approval complete the release gate for the declared MATLAB R2026a Update 4 on
+Apple Silicon scope. This does not establish equivalence for other MATLAB
+releases, architectures, or untested inputs. See
 `validation/equivalence/2026-08-02/REPORT.md`.
 
 ## Automated validation
@@ -27,6 +30,13 @@ The Python suite covers:
 - analytic nonlinear Jacobians against finite differences;
 - bounded prevalence and prevalence-plus-heritability solving;
 - invalid MATLAB schemas, genotype codes, labels, and output collisions;
+- native reference schema, dimensions, genotype encoding, and component
+  checksums;
+- VCF sample/population selection, hard-call filtering, and minor-allele
+  orientation;
+- exact same-seed simulation equality after MATLAB-to-native conversion in both
+  compatibility and strict modes;
+- MATLAB export round-trip preservation of donor genotypes and control labels;
 - seeded fragment resampling and exact strict-mode quotas;
 - end-to-end API and CLI reproducibility;
 - MATLAB R2026a twister and single-choice `randperm` compatibility probes;
@@ -39,6 +49,14 @@ The published tables contain six-decimal MAFs and penetrances. Recomputed
 statistics therefore use tolerances that include documented rounding loss:
 `6e-4` for prevalence, `6e-3` for heritability, and the original `<0.05`
 marginal threshold.
+
+Native-format conversion has a stronger gate than the cross-language solver
+comparison: because it only changes storage, selected loci, observed MAFs,
+penetrances, and generated integer matrices must be exactly equal for the same
+configuration and seed. No numerical tolerance is applied. A tolerance may be
+registered in advance for a future adapter only when its specified source
+representation necessarily introduces floating-point conversion; exact
+genotypes, ordering, sample selection, and simulation matrices remain required.
 
 ## Required MATLAB golden corpus
 
@@ -57,13 +75,17 @@ Before an equivalence release:
 7. Compare normalized text and log output byte-for-byte.
 8. Compare MATLAB variables after loading: names, shapes, dtypes, and values.
 
-The compatibility test is intentionally skipped until that manifest exists.
+The committed manifest exists and the compatibility tests enforce all eight
+requirements above. The compact fixture uses an integer MATLAB class so output
+class preservation is covered in addition to the original double-valued matrix.
 
 ## Stochastic validation
 
 Statistical assessment supplements, but does not replace, same-seed exact-output
-comparison. Full equivalence requires a demonstrated MATLAB-compatible random
-stream and random-consumption order for every supported MATLAB release.
+comparison. Equivalence requires a demonstrated MATLAB-compatible random stream
+and random-consumption order for every MATLAB release inside the declared
+compatibility boundary. That boundary is currently R2026a Update 4 on Apple
+Silicon.
 Repeated runs must also compare:
 
 - SNP minor-allele frequencies;
@@ -91,7 +113,10 @@ The `lescailab/epiresim 0.1.0 py_1` noarch Conda package was built from a
 checksummed archive of the recorded source commit, passed the recipe tests, and
 was installed successfully from the public channel into a clean Python 3.11
 environment. See `validation/packaging/2026-08-02/CONDA.md`. Clean wheel and OCI
-artifact validation remain outstanding.
+installation checks were also completed: the wheel resolved dependencies in a
+fresh Python 3.11 environment, and the OCI image passed CLI and synthetic
+simulation smoke tests. See
+`validation/packaging/2026-08-02/WHEEL_OCI.md`.
 
 ## Release gate
 
@@ -103,3 +128,7 @@ A stable equivalence claim requires:
 - documented unsupported behavior and compatibility deviations;
 - current citation, license, changelog, and governance files; and
 - human approval of the validation report.
+
+All gates above passed on 2026-08-02 for the explicitly bounded R2026a Update 4
+on Apple Silicon compatibility claim. Future changes to compatibility behavior
+or expansion of that boundary require revalidation.

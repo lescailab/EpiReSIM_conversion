@@ -31,7 +31,7 @@ It is not a general population-genetics or clinical-risk simulator.
 - explicit ancestry, demography, pedigrees, or relatedness;
 - recombination maps, mutation, selection, or coalescent history;
 - genotype likelihoods, phasing uncertainty, or imputation dosage;
-- VCF, BCF, PLINK, or direct tabular reference input;
+- direct BCF, PLINK, genotype-likelihood, or arbitrary tabular reference input;
 - interaction orders below two or above five; or
 - a penetrance solver that directly models empirical linkage disequilibrium.
 
@@ -45,6 +45,10 @@ It is not a general population-genetics or clinical-risk simulator.
    or private information into outputs.
 5. Exact same-seed validation covers registered scenarios, not the entire input
    space.
+6. The original reference file's public construction record is insufficient to
+   recover its source assembly, QC, and allele-orientation steps. Native builds
+   are transparent project extensions rather than reconstructions of those
+   unrecorded choices.
 
 ## Failure is informative
 

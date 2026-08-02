@@ -1,19 +1,24 @@
 # EpiReSIM
 
+[![rewrites.bio - Follows best practice principles for rewriting bioinformatics tools with AI](https://rewrites.bio/badges/rewrites-bio.svg)](https://rewrites.bio)
+
 EpiReSIM is an experimental Python rewrite of the MATLAB simulator described
 by Shang *et al.* (2022). It generates case-control SNP matrices containing an
 epistatic model without marginal effects (eNME) while resampling fragments from
 a reference genotype dataset.
 
-The package currently supports interaction orders 2–5, MATLAB v5 reference
-files, MATLAB-compatible matrix and text outputs, a compatibility mode, and a
-bounded strict mode.
+The package currently supports interaction orders 2–5, native versioned
+reference bundles, MATLAB v5 references, VCF/VCF.GZ reference construction,
+MATLAB-compatible matrix and text outputs, a compatibility mode, and a bounded
+strict mode.
 
 > **Validation status:** a licensed MATLAB comparison and remediation run now
 > passes the registered synthetic deterministic, same-seed end-to-end, and
-> 200-replicate stochastic matrices. Release-wide equivalence is not yet claimed
-> because the reviewed golden corpus, broader fixtures, artifact checks, and
-> human release approval remain outstanding. See [VALIDATION.md](VALIDATION.md)
+> 200-replicate stochastic matrices. The reviewed golden corpus, representative
+> historical-reference comparison, clean wheel/Conda/OCI checks, and human
+> approval complete the release gate for the declared MATLAB R2026a Update 4 on
+> Apple Silicon compatibility scope. This is not a claim about other MATLAB
+> releases, architectures, or untested inputs. See [VALIDATION.md](VALIDATION.md)
 > and the [2026-08-02 equivalence report](validation/equivalence/2026-08-02/REPORT.md).
 
 ## Installation
@@ -56,8 +61,10 @@ python -m pip install -e .
 The `noarch: python` package is published on the
 [`lescailab` Anaconda channel](https://anaconda.org/lescailab/epiresim).
 Environment definitions and an OCI container definition are also included in
-the repository. The bundled reference dataset is intentionally excluded from
-package and container artifacts.
+the repository. An upstream historical reference remains in the source history
+for compatibility study, but it is intentionally excluded from package and
+container artifacts and is not the recommended source for new analyses because
+its construction and provenance were not recorded reproducibly.
 
 ## Documentation
 
@@ -74,7 +81,7 @@ GitHub Actions.
 The command maps the original 12 MATLAB arguments to named options:
 
 ```bash
-epiresim simulate /path/to/reference.mat \
+epiresim simulate /path/to/reference.epiref \
   --cases 100 \
   --controls 100 \
   --snps 50 \
@@ -102,7 +109,7 @@ from pathlib import Path
 from epiresim import SimulationConfig, run
 
 config = SimulationConfig(
-    reference_path=Path("/path/to/reference.mat"),
+    reference_path=Path("/path/to/reference.epiref"),
     case_count=100,
     control_count=100,
     snp_count=50,
@@ -138,8 +145,9 @@ Compatibility mode preserves the MATLAB implementation's:
 - output names, genotype/phenotype codes, tab layout, and six-decimal log.
 
 Potentially infinite loops have explicit safety limits. Python and MATLAB random
-streams match for the validated R2026a same-seed scenarios; other MATLAB
-releases remain to be validated.
+streams match for the validated R2026a same-seed scenarios. R2026a Update 4 on
+Apple Silicon is the declared compatibility boundary; other MATLAB releases and
+architectures are outside the equivalence claim.
 
 ### Strict
 
@@ -158,7 +166,26 @@ Strict mode is scientifically safer but is not output-equivalent to MATLAB.
 
 ## Input and output schema
 
-The reference MATLAB file must contain:
+For new workflows, build a native reference from a one-chromosome VCF or VCF.GZ:
+
+```bash
+epiresim reference build /path/to/panel.vcf.gz \
+  --output /path/to/reference.epiref \
+  --genome-build GRCh38 \
+  --chromosome 1
+```
+
+The versioned bundle stores `int8` counted-allele dosages, variant and sample
+metadata, source and transformation information, and component checksums. VCF
+construction orients the counted allele to the selected donor population's
+minor allele; legacy conversion preserves unknown historical orientation.
+Inspect it with `epiresim reference inspect` and verify it with
+`epiresim reference validate`. See the
+[reference-data guide](https://lescailab.github.io/EpiReSIM_conversion/getting-started/reference-data/)
+for population selection, assumptions, provenance limitations, and MATLAB
+conversion.
+
+Legacy MATLAB files remain supported and must contain:
 
 - `pts`: samples by SNPs, with genotype codes `1`, `2`, and `3`;
 - `SampleInfo`: one row per sample and the class label in column five.
@@ -204,13 +231,13 @@ In scope:
 
 - binary case-control phenotypes;
 - interaction orders 2–5;
-- MATLAB v5 input and MATLAB/text output;
+- native and MATLAB v5 input plus MATLAB/text output;
 - the published HWE/linkage-equilibrium penetrance model;
 - fragment resampling from control genotypes.
 
 Out of scope:
 
-- R bindings, VCF/PLINK input, GUIs, and workflow-engine wrappers;
+- R bindings, direct BCF/PLINK input, GUIs, and workflow-engine wrappers;
 - orders outside 2–5;
 - empirical-LD penetrance solving;
 - quantitative or multiclass phenotypes.
@@ -246,8 +273,10 @@ through tests and comparison with the pinned original implementation, not by
 code generation or review alone.
 
 Compliance with [Rewrite.bio](https://rewrites.bio/) is a binding project rule;
-see [REWRITE_POLICY.md](REWRITE_POLICY.md). The project will not display an
-equivalence claim or badge until the MATLAB golden validation gate is complete.
+see [REWRITE_POLICY.md](REWRITE_POLICY.md). The Rewrite.bio badge states that
+the project follows its best-practice principles; it is not an equivalence
+certification. A release-wide equivalence claim remains subject to the gates in
+[VALIDATION.md](VALIDATION.md).
 
 ## License
 

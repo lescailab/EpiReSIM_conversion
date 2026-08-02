@@ -18,6 +18,7 @@ requested explicitly.
 | Causal loci | Repeated locus can occur | Loci must be distinct |
 | Existing outputs | MAT/log overwrite; text appends | Any collision is rejected |
 | MAT storage | Compressed MATLAB-class `double` | Uncompressed integer matrix |
+| Recommended new reference | Native bundle accepted as a compatibility bridge | Native provenance-aware bundle |
 | Safety limits | Added to stop legacy non-termination | Added and enforced |
 
 ## Choose compatibility when

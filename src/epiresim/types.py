@@ -6,7 +6,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
 from types import MappingProxyType
-from typing import Literal
+from typing import Any, Literal
 
 import numpy as np
 from numpy.typing import NDArray
@@ -88,6 +88,10 @@ class ReferenceData:
     variant_metadata: NDArray[np.object_] | None
     name: str
     window_start: int
+    sample_metadata: NDArray[np.object_] | None = None
+    compatibility_mat_dtype: np.dtype[Any] = field(
+        default_factory=lambda: np.dtype(np.float64)
+    )
 
     def __post_init__(self) -> None:
         if self.genotypes.ndim != 2:

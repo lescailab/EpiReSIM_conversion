@@ -1,6 +1,6 @@
 ---
 title: Validation status
-description: Exact scope, results, and remaining gates for comparison with the pinned MATLAB implementation.
+description: Exact scope, results, and release decision for comparison with the pinned MATLAB implementation.
 ---
 
 ## Current result
@@ -23,6 +23,8 @@ The original MATLAB files under `code/` were unchanged during validation.
 | Text files | 48/48 byte-identical |
 | Model logs | 24/24 byte-identical |
 | 200-replicate same-seed study | 200/200 matrices exact |
+| Representative historical-reference matrices | 2/2 exact, including dtype |
+| Committed golden compatibility tests | 20/20 passed |
 | Maximum nonlinear penetrance difference | $8.21\times10^{-11}$ |
 | Registered penetrance tolerance | $5\times10^{-7}$ |
 
@@ -31,18 +33,23 @@ Both MAT writers expose a compressed Level-5 `SNP` variable with MATLAB class
 and internal numeric storage; validation compares the registered loaded schema
 and exact values.
 
-## What remains
+## Release decision
 
-Release-wide equivalence is not yet claimed. Outstanding gates include:
+The release gate passed on 2026-08-02 for the declared MATLAB R2026a Update 4
+on Apple Silicon compatibility scope. The completed gate includes:
 
 - a reviewed, committed, redistributable golden corpus and manifest;
-- broader reference dimensions, boundaries, and expected failures;
-- authorized representative real-data comparison;
-- validation of supported MATLAB releases and architectures, or an explicit
-  R2026a compatibility boundary;
-- clean wheel and OCI artifact validation (the public noarch Conda 0.1.0
-  package has passed a clean remote-install check); and
-- explicit human approval of the completed release report.
+- orders 2–5, both solver strategies, two reference dimensions and MATLAB
+  classes, expected failures, MAT/text output, and exact logs;
+- an ephemeral representative historical-reference comparison with no new
+  genotype data committed;
+- clean wheel, public Conda, and OCI installation checks; and
+- explicit human approval of the completed report.
+
+The bundled historical reference has incomplete construction provenance, so it
+is evidence for compatibility behavior rather than a recommended reference for
+new analyses. Other MATLAB releases, architectures, and untested boundary inputs
+remain outside the equivalence claim.
 
 Read the repository's
 [full report](https://github.com/lescailab/EpiReSIM_conversion/blob/main/validation/equivalence/2026-08-02/REPORT.md)

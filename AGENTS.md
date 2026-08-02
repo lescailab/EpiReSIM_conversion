@@ -33,5 +33,8 @@ apply to every human contribution and automated coding session.
   upstream maintainers; never send automated upstream reports.
 
 The current cross-language result is recorded in
-`validation/equivalence/2026-08-02/REPORT.md`. Its registered synthetic matrix
-passes after remediation, but it does not yet satisfy the full release gate.
+`validation/equivalence/2026-08-02/REPORT.md`. The registered synthetic
+cross-language matrix, committed golden corpus, representative historical-data
+comparison, artifact checks, and human approval satisfy the release gate for
+the declared MATLAB R2026a Update 4 on Apple Silicon scope. Do not broaden this
+claim to other MATLAB releases, architectures, or untested inputs.

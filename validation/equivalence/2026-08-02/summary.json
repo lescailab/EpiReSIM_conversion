@@ -1,6 +1,6 @@
 {
   "date": "2026-08-02",
-  "status": "passed_registered_synthetic_matrix_release_gate_incomplete",
+  "status": "passed_declared_r2026a_update_4_apple_silicon_scope",
   "oracle_commit": "16adb481b5b0223a5d97622e4df61ed6fc5b0c93",
   "toxo_commit": "0e49e8d2454a501e098b9456bfad53226c34eed1",
   "environment": {
@@ -20,8 +20,8 @@
     "toxo/nfold.m": "9bf9c9f5316e3c424a04c919c46723330f124541df8307f937d17f590a8c1fa4"
   },
   "python_tests": {
-    "passed": 46,
-    "skipped": 1
+    "passed": 77,
+    "skipped": 0
   },
   "deterministic": {
     "probability_max_abs_error": 5.551115123125783e-17,
@@ -49,10 +49,27 @@
     "sorted_column_maf_mean_abs_difference": 0.0,
     "sorted_column_maf_max_abs_difference": 0.0
   },
-  "remaining_gates": [
-    "reviewed_committed_golden_manifest",
-    "broader_and_representative_fixtures",
-    "wheel_and_oci_validation",
-    "human_release_approval"
-  ]
+  "golden_corpus": {
+    "comparison_tests": 20,
+    "passed": 20,
+    "reference_dimensions": [[240, 48], [80, 16]],
+    "matlab_classes": ["double", "int8"]
+  },
+  "representative_historical_reference": {
+    "exact_matrices": 2,
+    "matching_matlab_classes": 2,
+    "exact_text_files": 2,
+    "exact_logs": 1,
+    "outputs_committed": false
+  },
+  "artifacts": {
+    "wheel_sha256": "779991e92a41afbdc9a9a1ce338815165b4d05457c967c321115af7c3683ade8",
+    "conda_sha256": "7d1cf283750a5e1f0148230aac50e424ed773123dfa12489c7a831d5ec715d83",
+    "oci_image_id": "sha256:815ff000327a5af9f8027b6ec594d8525e50fa5649df7638d7089b141a750504"
+  },
+  "human_approval": {
+    "date": "2026-08-02",
+    "status": "approved"
+  },
+  "remaining_gates": []
 }

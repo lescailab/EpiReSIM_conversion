@@ -8,14 +8,15 @@ SNP columns. Two of the SNPs define the epistatic model.
 
 ## Before you run
 
-You need a MATLAB v5 reference file with the variables described in
-[Prepare reference data](../reference-data/). Replace
-`/path/to/reference.mat` with your own file.
+You need a native `.epiref` bundle or a legacy MATLAB v5 reference. The
+[reference-data guide](../reference-data/) explains how to build a native
+bundle from VCF/VCF.GZ or import an existing MAT file. Replace the example path
+with your validated reference.
 
 ## Run the model
 
 ```bash
-epiresim simulate /path/to/reference.mat \
+epiresim simulate /path/to/reference.epiref \
   --cases 50 \
   --controls 50 \
   --snps 100 \

@@ -3,6 +3,18 @@
 All notable changes are documented here. The project follows Semantic
 Versioning after the first stable release.
 
+## Unreleased
+
+### Added
+
+- Versioned, checksummed `.epiref` reference bundles with VCF/VCF.GZ
+  construction, population/sample selection, validation, inspection, and
+  MATLAB import/export.
+- Exact compatibility- and strict-mode simulation parity tests between legacy
+  MATLAB references and their native conversions.
+- Transparent documentation of assumptions required because the historical
+  reference-construction procedure was not recorded reproducibly.
+
 ## 0.1.0 — 2026-08-02
 
 ### Added
@@ -27,5 +39,6 @@ Versioning after the first stable release.
   `double` output after a licensed MATLAB R2026a comparison.
 - The remediation run matched 24/24 execution statuses, 48/48 same-seed output
   matrices, text files, and dtypes, 24/24 logs, and 200/200 stochastic replicate
-  matrices. Release-wide equivalence remains unclaimed pending the full release
-  gate in `VALIDATION.md`.
+  matrices. A committed golden corpus, a representative historical-reference
+  comparison, clean wheel/Conda/OCI checks, and human approval complete the
+  release gate for the declared MATLAB R2026a Update 4 on Apple Silicon scope.

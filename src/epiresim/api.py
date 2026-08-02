@@ -106,6 +106,7 @@ def run(config: SimulationConfig) -> SimulationResult:
                 / f"{config.output_prefix}_{replicate}.{output_format}",
                 output_format,
                 config.mode,
+                reference.compatibility_mat_dtype,
             )
     write_model_log(model, config.output_dir)
     diagnostics["sampling_attempts"] = float(total_attempts)

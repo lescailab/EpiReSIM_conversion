@@ -1,9 +1,11 @@
 # MATLAB golden corpus
 
-This directory is reserved for small, redistributable fixtures produced by the
-pinned MATLAB reference implementation. Do not add private reference datasets.
+This directory contains small, redistributable synthetic references and outputs
+from the pinned MATLAB reference implementation. No private or representative
+real dataset is included.
 
-The compatibility parity test remains skipped until `manifest.json` records the
-source commit, MATLAB and Symbolic Math Toolbox versions, platform, commands,
-seeds, fixture checksums, and pre-registered comparison tolerances described in
-`VALIDATION.md`.
+`manifest.json` records the source commit, MATLAB and Symbolic Math Toolbox
+versions, platform, commands, seeds, fixture checksums, and pre-registered
+comparison tolerances. The compatibility tests verify every checksum, compare
+deterministic floating-point results within the registered tolerance, and
+compare loaded matrices, MATLAB dtypes, text output, and logs exactly.
