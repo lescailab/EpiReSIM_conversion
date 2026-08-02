@@ -1,0 +1,58 @@
+{
+  "date": "2026-08-02",
+  "status": "passed_registered_synthetic_matrix_release_gate_incomplete",
+  "oracle_commit": "16adb481b5b0223a5d97622e4df61ed6fc5b0c93",
+  "toxo_commit": "0e49e8d2454a501e098b9456bfad53226c34eed1",
+  "environment": {
+    "matlab": "R2026a Update 4",
+    "symbolic_math_toolbox": "26.1",
+    "architecture": "Apple Silicon",
+    "python": "3.11.15",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1"
+  },
+  "source_sha256": {
+    "code/Data.m": "f590747f5e737fe99d2c1000a39dae639c09cc2e9badaf9591eb6c3fa4d33b3e",
+    "code/EpiReSIM.m": "6c2a551180791a8fb45ce9ac3dbd3d22fa8e3904291e793dd16189e501701e27",
+    "code/calculation.m": "4633021ec1956c9f24813eae71a2ec20613f78d131b50e6eeea2f818d084e256",
+    "code/genotype_probabilities.m": "f1d8ffcf0d4861d7d0be53661cb66e635079d378e09d4fa54f3ac2297f03abaa",
+    "code/simulation.m": "6ca1b4ed7d2e30fe05eba16f1e81b1346fa8450048fe1d3972ac4bc0b3a3dab5",
+    "toxo/nfold.m": "9bf9c9f5316e3c424a04c919c46723330f124541df8307f937d17f590a8c1fa4"
+  },
+  "python_tests": {
+    "passed": 46,
+    "skipped": 1
+  },
+  "deterministic": {
+    "probability_max_abs_error": 5.551115123125783e-17,
+    "prevalence_only_penetrance_max_abs_error": 7.216449660063518e-16,
+    "nonlinear_penetrance_max_abs_error": 8.203659973560207e-11,
+    "registered_penetrance_tolerance": 5e-07,
+    "matched_fixed_case_failures": 1
+  },
+  "end_to_end": {
+    "paired_executions": 24,
+    "status_matches": 24,
+    "paired_matrices": 48,
+    "exact_matrices": 48,
+    "matching_matlab_class_dtypes": 48,
+    "exact_text_files": 48,
+    "exact_logs": 24
+  },
+  "stochastic": {
+    "replicates": 200,
+    "samples_per_replicate": 100,
+    "exact_matrices": 200,
+    "global_maf_abs_difference": 0.0,
+    "global_genotype_frequency_max_abs_difference": 0.0,
+    "mean_pairwise_r2_abs_difference": 0.0,
+    "sorted_column_maf_mean_abs_difference": 0.0,
+    "sorted_column_maf_max_abs_difference": 0.0
+  },
+  "remaining_gates": [
+    "reviewed_committed_golden_manifest",
+    "broader_and_representative_fixtures",
+    "wheel_conda_oci_validation",
+    "human_release_approval"
+  ]
+}

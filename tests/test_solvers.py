@@ -7,6 +7,7 @@ from scipy.optimize._numdiff import approx_derivative
 from epiresim import solve_penetrance
 from epiresim.exceptions import InfeasibleModelError, InputValidationError
 from epiresim.probabilities import marginal_constraint_matrix
+from epiresim.solvers import _gauss_seidel_normal_step
 
 
 @pytest.mark.parametrize(
@@ -46,6 +47,20 @@ def test_strict_analytic_variance_jacobian_matches_finite_difference() -> None:
     analytic = np.vstack((matrix, 2.0 * weights * (values - prevalence)))
     numeric = approx_derivative(residual, values, method="3-point")
     np.testing.assert_allclose(analytic, numeric, rtol=1e-7, atol=1e-9)
+
+
+def test_compatibility_gauss_seidel_returns_matlab_previous_iterate() -> None:
+    jacobian = np.array([[1.0, 0.0], [1.0, 1.0]])
+    residual = np.array([-1.0, 0.0])
+
+    observed = _gauss_seidel_normal_step(
+        jacobian,
+        residual,
+        tolerance=0.1,
+        max_iterations=10,
+    )
+
+    np.testing.assert_array_equal(observed, np.array([0.875, -0.875]))
 
 
 def test_compatibility_prevalence_solver_preserves_legacy_shape() -> None:

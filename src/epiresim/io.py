@@ -10,6 +10,7 @@ import numpy as np
 from numpy.typing import NDArray
 from scipy import io as scipy_io
 
+from ._random import RandomSource, matlab_randperm_one, random_integer
 from .exceptions import InputValidationError, OutputCollisionError
 from .types import PenetranceModel, ReferenceData, SimulationConfig
 
@@ -50,7 +51,7 @@ def _extract_labels(sample_info: NDArray[np.object_], row_count: int) -> NDArray
 def load_reference(
     path: str | Path,
     config: SimulationConfig,
-    rng: np.random.Generator,
+    rng: RandomSource,
 ) -> ReferenceData:
     """Load and validate the MATLAB reference dataset used for resampling."""
 
@@ -97,7 +98,7 @@ def load_reference(
             )
         window_start = matlab_start - 1
     else:
-        window_start = int(rng.integers(0, available_starts + 1))
+        window_start = random_integer(rng, 0, available_starts + 1)
 
     selected = np.asarray(
         genotypes[:, window_start : window_start + config.snp_count], dtype=np.int8
@@ -140,7 +141,7 @@ def select_model_loci(
     mafs: NDArray[np.float64],
     targets: tuple[float, ...],
     mode: str,
-    rng: np.random.Generator,
+    rng: RandomSource,
     max_steps: int,
 ) -> tuple[int, ...]:
     """Select causal loci by widening the requested MAF tolerance in 0.01 steps."""
@@ -161,7 +162,12 @@ def select_model_loci(
             raise InputValidationError(
                 f"No eligible locus found near target MAF {target:.6f}."
             )
-        choice = int(candidates[int(rng.integers(0, candidates.size))])
+        candidate_index = (
+            matlab_randperm_one(rng, int(candidates.size))
+            if mode == "compatibility"
+            else random_integer(rng, 0, int(candidates.size))
+        )
+        choice = int(candidates[candidate_index])
         selected.append(choice)
 
     if mode == "strict" and len(set(selected)) != len(selected):
@@ -200,11 +206,12 @@ def write_matrix(
     """Write one simulated matrix in a legacy-compatible format."""
 
     if output_format == "mat":
+        matrix_dtype = np.float64 if mode == "compatibility" else np.int8
         scipy_io.savemat(
             path,
-            {"SNP": np.asarray(matrix, dtype=np.int8)},
+            {"SNP": np.asarray(matrix, dtype=matrix_dtype)},
             format="5",
-            do_compression=False,
+            do_compression=mode == "compatibility",
             oned_as="row",
         )
         return

@@ -34,8 +34,9 @@ def _gauss_seidel_normal_step(
     lower = np.tril(normal_matrix)
     upper = np.triu(normal_matrix, 1)
     try:
-        iteration_matrix = -linalg.solve_triangular(lower, upper, lower=True)
-        intercept = linalg.solve_triangular(lower, normal_rhs, lower=True)
+        lower_inverse = linalg.inv(lower)
+        iteration_matrix = -lower_inverse @ upper
+        intercept = lower_inverse @ normal_rhs
     except linalg.LinAlgError as error:
         raise InfeasibleModelError(
             "Compatibility Newton step produced a singular Gauss-Seidel system."
@@ -45,7 +46,9 @@ def _gauss_seidel_normal_step(
     for _ in range(max_iterations):
         candidate = iteration_matrix @ step + intercept
         if np.max(np.abs(candidate - step)) < tolerance:
-            return cast(FloatArray, candidate)
+            # MATLAB's pre_seidel checks the candidate before assigning it to x,
+            # so the converged result is the previous iterate rather than tmp.
+            return cast(FloatArray, step)
         if not np.all(np.isfinite(candidate)):
             raise InfeasibleModelError(
                 "Compatibility Gauss-Seidel iteration produced non-finite values."

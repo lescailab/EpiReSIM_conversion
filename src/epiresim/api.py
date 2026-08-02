@@ -6,6 +6,7 @@ from dataclasses import replace
 
 import numpy as np
 
+from ._random import RandomSource, compatibility_random_state
 from .io import (
     control_mafs,
     load_reference,
@@ -49,7 +50,7 @@ def simulate(
     reference: ReferenceData | np.ndarray,
     model: PenetranceModel,
     config: SimulationConfig,
-    rng: np.random.Generator,
+    rng: RandomSource,
 ) -> tuple[np.ndarray, int]:
     """Generate one simulated dataset from a validated control matrix."""
 
@@ -62,7 +63,11 @@ def simulate(
 def run(config: SimulationConfig) -> SimulationResult:
     """Run the complete load, solve, simulate, and write workflow."""
 
-    rng = np.random.default_rng(config.seed)
+    rng: RandomSource = (
+        compatibility_random_state(config.seed)
+        if config.mode == "compatibility"
+        else np.random.default_rng(config.seed)
+    )
     preflight_outputs(config)
     reference = load_reference(config.reference_path, config, rng)
     observed_mafs = control_mafs(reference.control_genotypes)

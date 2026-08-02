@@ -4,8 +4,9 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-from scipy.io import loadmat, savemat
+from scipy.io import loadmat, savemat, whosmat
 
+from epiresim._random import compatibility_random_state, matlab_randperm_one
 from epiresim.exceptions import InputValidationError, OutputCollisionError
 from epiresim.io import (
     control_mafs,
@@ -64,6 +65,23 @@ def test_strict_locus_selection_is_unique() -> None:
     assert len(set(loci)) == 2
 
 
+def test_matlab_twister_and_randperm_one_match_recorded_oracle_sequence() -> None:
+    rng = compatibility_random_state(11)
+
+    assert float(rng.random()) == 0.1802696888767692
+    assert matlab_randperm_one(rng, 2) == 0
+    assert float(rng.random()) == 0.7249339291921478
+
+
+def test_matlab_seed_zero_matches_factory_twister_sequence() -> None:
+    rng = compatibility_random_state(0)
+
+    np.testing.assert_array_equal(
+        rng.random(3),
+        np.array([0.8147236863931789, 0.9057919370756192, 0.12698681629350606]),
+    )
+
+
 def test_missing_matlab_variables_are_rejected(tmp_path: Path) -> None:
     path = tmp_path / "invalid.mat"
     savemat(path, {"wrong": np.ones((2, 2))})
@@ -104,6 +122,19 @@ def test_matrix_writers_preserve_legacy_schema(tmp_path: Path) -> None:
     assert set(key for key in loaded if not key.startswith("__")) == {"SNP"}
     np.testing.assert_array_equal(loaded["SNP"], matrix)
     assert txt_path.read_text() == "1\t2\t3\t0\t\n3\t2\t1\t1\t\n"
+
+
+def test_compatibility_mat_writer_matches_matlab_dtype_and_compression(
+    tmp_path: Path,
+) -> None:
+    matrix = np.array([[1, 2, 3, 0], [3, 2, 1, 1]], dtype=np.int8)
+    path = tmp_path / "result.mat"
+
+    write_matrix(matrix, path, "mat", "compatibility")
+
+    assert whosmat(path) == [("SNP", (2, 4), "double")]
+    assert int.from_bytes(path.read_bytes()[128:132], byteorder="little") == 15
+    np.testing.assert_array_equal(loadmat(path, mat_dtype=True)["SNP"], matrix)
 
 
 def test_model_log_uses_matlab_indexing_and_six_decimals() -> None:

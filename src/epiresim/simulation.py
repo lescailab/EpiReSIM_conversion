@@ -5,6 +5,7 @@ from __future__ import annotations
 import numpy as np
 from numpy.typing import NDArray
 
+from ._random import RandomSource, random_integer
 from .exceptions import SamplingError
 from .types import PenetranceModel, SimulationConfig
 
@@ -15,7 +16,7 @@ def _matlab_round_positive(values: float | NDArray[np.float64]) -> NDArray[np.in
 
 def generate_breakpoints(
     snp_count: int,
-    rng: np.random.Generator,
+    rng: RandomSource,
 ) -> NDArray[np.int64]:
     """Generate MATLAB-style one-based fragment breakpoints."""
 
@@ -29,7 +30,7 @@ def generate_breakpoints(
 def splice_fragments(
     reference: NDArray[np.integer],
     breakpoints: NDArray[np.int64],
-    rng: np.random.Generator,
+    rng: RandomSource,
     mode: str,
 ) -> NDArray[np.int8]:
     """Splice contiguous SNP fragments from independently selected donors."""
@@ -44,7 +45,7 @@ def splice_fragments(
         donor = int(_matlab_round_positive(float(rng.random()) * (row_count - 2)))
         donor_upper = row_count - 1
     else:
-        donor = int(rng.integers(0, row_count))
+        donor = random_integer(rng, 0, row_count)
         donor_upper = row_count
 
     output = np.empty(snp_count, dtype=np.int8)
@@ -65,7 +66,7 @@ def splice_fragments(
                     )
                 donor = new_donor - 1
             else:
-                donor = int(rng.integers(0, donor_upper))
+                donor = random_integer(rng, 0, donor_upper)
         output[one_based_column - 1] = reference[donor, one_based_column - 1]
     return output
 
@@ -73,7 +74,7 @@ def splice_fragments(
 def assign_phenotype(
     genotypes: NDArray[np.integer],
     model: PenetranceModel,
-    rng: np.random.Generator,
+    rng: RandomSource,
 ) -> int:
     """Draw a binary phenotype from the penetrance indexed by causal genotypes."""
 
@@ -87,7 +88,7 @@ def assign_phenotype(
 def _draw_candidate(
     controls: NDArray[np.integer],
     model: PenetranceModel,
-    rng: np.random.Generator,
+    rng: RandomSource,
     mode: str,
 ) -> tuple[NDArray[np.int8], int]:
     breakpoints = generate_breakpoints(controls.shape[1], rng)
@@ -99,7 +100,7 @@ def _simulate_strict(
     controls: NDArray[np.integer],
     model: PenetranceModel,
     config: SimulationConfig,
-    rng: np.random.Generator,
+    rng: RandomSource,
 ) -> tuple[NDArray[np.int8], int]:
     rows: list[NDArray[np.int8]] = []
     case_count = 0
@@ -126,7 +127,7 @@ def _simulate_compatibility(
     controls: NDArray[np.integer],
     model: PenetranceModel,
     config: SimulationConfig,
-    rng: np.random.Generator,
+    rng: RandomSource,
 ) -> tuple[NDArray[np.int8], int]:
     target_rows = config.case_count + config.control_count
     matrix = np.zeros((target_rows, controls.shape[1] + 1), dtype=np.int8)
@@ -171,7 +172,7 @@ def simulate_dataset(
     controls: NDArray[np.integer],
     model: PenetranceModel,
     config: SimulationConfig,
-    rng: np.random.Generator,
+    rng: RandomSource,
 ) -> tuple[NDArray[np.int8], int]:
     """Generate one matrix using the selected compatibility or strict sampler."""
 

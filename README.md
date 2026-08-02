@@ -9,10 +9,12 @@ The package currently supports interaction orders 2–5, MATLAB v5 reference
 files, MATLAB-compatible matrix and text outputs, a compatibility mode, and a
 bounded strict mode.
 
-> **Validation status:** the mathematical core, published model tables,
-> packaging, and Python workflows are tested. Cross-language equivalence is not
-> yet claimed because a MATLAB golden corpus has not been generated. See
-> [VALIDATION.md](VALIDATION.md).
+> **Validation status:** a licensed MATLAB comparison and remediation run now
+> passes the registered synthetic deterministic, same-seed end-to-end, and
+> 200-replicate stochastic matrices. Release-wide equivalence is not yet claimed
+> because the reviewed golden corpus, broader fixtures, artifact checks, and
+> human release approval remain outstanding. See [VALIDATION.md](VALIDATION.md)
+> and the [2026-08-02 equivalence report](validation/equivalence/2026-08-02/REPORT.md).
 
 ## Installation
 
@@ -111,7 +113,8 @@ Compatibility mode preserves the MATLAB implementation's:
 - output names, genotype/phenotype codes, tab layout, and six-decimal log.
 
 Potentially infinite loops have explicit safety limits. Python and MATLAB random
-streams are not assumed to be identical.
+streams match for the validated R2026a same-seed scenarios; other MATLAB
+releases remain to be validated.
 
 ### Strict
 
@@ -217,9 +220,9 @@ criteria, and release decisions are human-defined. Correctness is evaluated
 through tests and comparison with the pinned original implementation, not by
 code generation or review alone.
 
-The project follows the principles of [Rewrite.bio](https://rewrites.bio/), but
-will not display an equivalence badge until the MATLAB golden validation gate
-is complete.
+Compliance with [Rewrite.bio](https://rewrites.bio/) is a binding project rule;
+see [REWRITE_POLICY.md](REWRITE_POLICY.md). The project will not display an
+equivalence claim or badge until the MATLAB golden validation gate is complete.
 
 ## License
 

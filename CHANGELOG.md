@@ -16,4 +16,10 @@ Versioning after the first stable release.
 
 ### Validation
 
-- Cross-language equivalence remains pending a MATLAB golden corpus.
+- Corrected compatibility-mode nonlinear iteration, MATLAB twister random
+  consumption, single-choice `randperm` behavior, and compressed MATLAB-class
+  `double` output after a licensed MATLAB R2026a comparison.
+- The remediation run matched 24/24 execution statuses, 48/48 same-seed output
+  matrices, text files, and dtypes, 24/24 logs, and 200/200 stochastic replicate
+  matrices. Release-wide equivalence remains unclaimed pending the full release
+  gate in `VALIDATION.md`.

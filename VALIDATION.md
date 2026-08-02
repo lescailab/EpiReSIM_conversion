@@ -9,8 +9,13 @@ The reference MATLAB implementation is pinned to:
 ```
 
 The MATLAB source in `code/` remains unchanged and is the validation oracle.
-MATLAB is not available in the current development environment, so the Python
-rewrite does not yet claim cross-language equivalence.
+A licensed MATLAB comparison and remediation run was completed on 2026-08-02.
+The initial run exposed nonlinear-solver, RNG, success/failure, dtype, and
+serialization differences. After targeted compatibility corrections, the
+registered synthetic matrix passed. Release-wide cross-language equivalence is
+still not claimed because the committed golden corpus and remaining release
+gates below are incomplete. See
+`validation/equivalence/2026-08-02/REPORT.md`.
 
 ## Automated validation
 
@@ -24,6 +29,9 @@ The Python suite covers:
 - invalid MATLAB schemas, genotype codes, labels, and output collisions;
 - seeded fragment resampling and exact strict-mode quotas;
 - end-to-end API and CLI reproducibility;
+- MATLAB R2026a twister and single-choice `randperm` compatibility probes;
+- MATLAB-compatible nonlinear Gauss–Seidel convergence behavior;
+- MATLAB-class `double`, compressed Level-5 compatibility output;
 - recomputation of the eight published model tables; and
 - wheel, Conda, and container smoke installation in CI.
 
@@ -53,8 +61,10 @@ The compatibility test is intentionally skipped until that manifest exists.
 
 ## Stochastic validation
 
-Cross-language stochastic output is assessed statistically unless an identical
-MATLAB random stream is independently demonstrated. Repeated runs must compare:
+Statistical assessment supplements, but does not replace, same-seed exact-output
+comparison. Full equivalence requires a demonstrated MATLAB-compatible random
+stream and random-consumption order for every supported MATLAB release.
+Repeated runs must also compare:
 
 - SNP minor-allele frequencies;
 - genotype-frequency distributions;
@@ -63,9 +73,10 @@ MATLAB random stream is independently demonstrated. Repeated runs must compare:
 - causal-genotype risks; and
 - fragment-length and donor distributions.
 
-Confidence intervals and replicate counts must be registered in the golden
-manifest before results are examined. Individual stochastic matrices are not
-required to match merely because seed values have the same spelling.
+Confidence intervals, replicate counts, and equivalence margins must be
+registered in the golden manifest before results are examined. Statistical
+agreement may support a narrower distributional claim, but individual
+same-seed mismatches still fail the full Rewrite.bio equivalence gate.
 
 ## Performance claims
 
